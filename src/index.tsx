@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Profile from "./Containers/Profile";
+import Builder from "./Containers/Builder";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
@@ -15,9 +15,9 @@ root.render(
     <HashRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<Profile />} />
-          <Route path="/:npub" element={<Profile />} />
-          <Route path="/create" element={<Profile />} />
+          <Route index element={<Builder />} />
+          <Route path="/:npub" element={<Builder />} />
+          <Route path="/create" element={<Builder />} />
         </Route>
       </Routes>
     </HashRouter>
