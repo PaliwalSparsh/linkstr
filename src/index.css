@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@700;800&family=Inter:wght@400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: 'Inter';
+}
+
+/* 
+- Possible fonts
+font-family: 'Anek Devanagari', sans-serif; Only bold and extra bold.
+font-family: 'Inter', sans-serif;
+*/

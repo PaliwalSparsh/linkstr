@@ -39,11 +39,10 @@ const Builder = () => {
       Hello!
       {!npub && (
         <button
-          className="bg-gradient-to-r from-purple-500 to-pink-500"
+          className="font-serif bg-gradient-to-r from-purple-500 to-pink-500"
           onClick={submitLinks}
         >
-          {" "}
-          Submit links{" "}
+          Submit links
         </button>
       )}
       {links.map((link) => (
