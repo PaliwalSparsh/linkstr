@@ -4,16 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-- Possible fonts
-font-family: 'Anek Devanagari', sans-serif; Only bold and extra bold.
-font-family: 'Inter', sans-serif;
-*/
-
 @layer components {
     .button {
-        @apply h-8 text-white px-3 font-medium text-sm hover:opacity-80;
-        border-radius: 10px;
+        @apply text-white font-medium text-sm rounded-lg hover:opacity-80;
         background: linear-gradient(180deg, #FF6B00 0%, #FF2E00 60.92%);
+    }
+
+    .action-button{
+        @apply flex justify-center items-center h-8 w-8 rounded-full opacity-60 cursor-pointer hover:bg-black/5 hover:opacity-90 active:bg-black/10 active:opacity-100 absolute transition-all duration-200;
+    }
+
+    .h1{
+        @apply font-serif text-6xl leading-none;
     }
 }
