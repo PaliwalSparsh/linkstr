@@ -4,12 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Inter';
-}
-
 /* 
 - Possible fonts
 font-family: 'Anek Devanagari', sans-serif; Only bold and extra bold.
 font-family: 'Inter', sans-serif;
 */
+
+@layer components {
+    .button {
+        @apply h-8 text-white px-3 font-medium text-sm hover:opacity-80;
+        border-radius: 10px;
+        background: linear-gradient(180deg, #FF6B00 0%, #FF2E00 60.92%);
+    }
+}
