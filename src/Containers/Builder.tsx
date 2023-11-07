@@ -5,6 +5,7 @@ import linkstrLogo from "../Images/logo.svg";
 import linkIcon from "../Images/link.svg";
 import cancelIcon from "../Images/cancel.svg";
 import background from "../Images/background.png";
+import downArrowArt from "../Images/downArrowArt.png";
 
 const Builder = () => {
   const tempLinks = ["google.com", "youtube.com"];
@@ -81,13 +82,19 @@ const Builder = () => {
 
     const PublishButton = <button className="button h-8 px-3">Publish</button>;
 
+    const DownArrowArt = (
+      <img src={downArrowArt} alt="" className="h-56 right-1/2 -top-1" />
+    );
+
     return (
-      <div className="flex justify-between mt-8">
+      <div className="flex items-center justify-between mt-8">
         {Logo}
+        {mode === "preview" && DownArrowArt}
         {mode === "edit" && PublishButton}
       </div>
     );
   };
+
   const TitleAndDescription = () => {
     return (
       <div className="text-center mx-auto mt-14">
