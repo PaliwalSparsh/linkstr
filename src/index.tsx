@@ -3,11 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import Builder from "./Containers/Builder";
+import Builder from "./Components/Builder";
 import { HashRouter, Route, Routes } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 
 root.render(
@@ -21,7 +21,7 @@ root.render(
         </Route>
       </Routes>
     </HashRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
