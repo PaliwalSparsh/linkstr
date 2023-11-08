@@ -3,7 +3,6 @@ import cancelIcon from "../Images/cancel.svg";
 import handleIcon from "../Images/handle.svg";
 import { Reorder, useDragControls } from "framer-motion";
 import { useState } from "react";
-import { set } from "@project-serum/anchor/dist/cjs/utils/features";
 
 const mockData = [
   {
@@ -50,7 +49,7 @@ const Link = ({
       value={data}
       dragListener={false}
       dragControls={controls}
-      className="relative flex flex-col border-b py-6"
+      className="relative flex w-full flex-col border-b bg-white pb-6"
     >
       <div className="action-button absolute -right-2.5">
         <img src={cancelIcon} alt="" />
@@ -82,12 +81,12 @@ const Collection = () => {
   return (
     <Reorder.Group
       axis="y"
-      values={links}
       onReorder={setLinks}
-      className="mt-8"
+      values={links}
+      className="mt-14 flex flex-col gap-6"
     >
-      {mockData.map((linkData) => (
-        <Link data={linkData} key={linkData.url} />
+      {links.map((link) => (
+        <Link data={link} key={link.url} />
       ))}
     </Reorder.Group>
   );
