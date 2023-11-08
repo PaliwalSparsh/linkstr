@@ -5,6 +5,7 @@ import Header from "./Header";
 import Welcome from "./Welcome";
 import Collection from "./Collection";
 import TitleAndDescription from "./TitleAndDescription";
+import AddLink from "./AddLink";
 
 // Types
 export type Mode = "welcome" | "edit" | "preview";
@@ -62,6 +63,7 @@ const Builder = () => {
           </div>
         </div>
       </div>
+      <AddLink />
     </div>
   );
 };
