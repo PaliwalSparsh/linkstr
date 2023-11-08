@@ -1,5 +1,9 @@
 import linkIcon from "../Images/link.svg";
 import cancelIcon from "../Images/cancel.svg";
+import handleIcon from "../Images/handle.svg";
+import { Reorder, useDragControls } from "framer-motion";
+import { useState } from "react";
+import { set } from "@project-serum/anchor/dist/cjs/utils/features";
 
 const mockData = [
   {
@@ -30,36 +34,62 @@ const mockData = [
 ];
 
 const Link = ({
-  name,
-  url,
-  description,
+  data,
 }: {
-  name: String;
-  url: String;
-  description: String;
+  data: {
+    name: String;
+    url: String;
+    description: String;
+  };
 }) => {
+  const controls = useDragControls();
+  const { name, url, description } = data;
+
   return (
-    <div className="relative flex flex-col border-b py-6">
-      <div className="action-button -right-2.5">
+    <Reorder.Item
+      value={data}
+      dragListener={false}
+      dragControls={controls}
+      className="relative flex flex-col border-b py-6"
+    >
+      <div className="action-button absolute -right-2.5">
         <img src={cancelIcon} alt="" />
       </div>
+
       <div className="flex flex-row items-center">
+        <img
+          src={handleIcon}
+          alt="handle used for reordering list elements"
+          className="action-button__no-bg cursor-grab pr-2 active:cursor-grabbing"
+          onPointerDown={(e) => {
+            controls.start(e);
+            e.preventDefault();
+          }}
+        />
+
         <img src={linkIcon} alt="" />
         <div className="pl-2 pt-1.5 font-serif text-xl">{name}</div>
       </div>
       <div className="pt-[-1] text-sm text-black/40">{url}</div>
       <div className="pt-3 text-black/60">{description}</div>
-    </div>
+    </Reorder.Item>
   );
 };
 
 const Collection = () => {
+  const [links, setLinks] = useState(mockData);
+
   return (
-    <div className="mt-8">
-      {mockData.map((link) => (
-        <Link name={link.name} url={link.url} description={link.description} />
+    <Reorder.Group
+      axis="y"
+      values={links}
+      onReorder={setLinks}
+      className="mt-8"
+    >
+      {mockData.map((linkData) => (
+        <Link data={linkData} key={linkData.url} />
       ))}
-    </div>
+    </Reorder.Group>
   );
 };
 

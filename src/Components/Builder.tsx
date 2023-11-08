@@ -12,12 +12,20 @@ export type Mode = "welcome" | "edit" | "preview";
 const tempLinks = ["google.com", "youtube.com"];
 
 const Builder = () => {
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [links, setLinks] = useState([]);
 
   const { npub } = useParams();
 
   useEffect(() => {
+    // Check if the user has already seen the welcome screen
+    if (localStorage.getItem("showWelcome") === "false") {
+      setShowWelcome(false);
+    } else {
+      // this else saves us from the welcome screen flashing on each reload
+      setShowWelcome(true);
+    }
+
     async function get() {
       if (npub) {
         let event = await getLinkCollection(npub);
@@ -28,6 +36,11 @@ const Builder = () => {
     get();
   }, []);
 
+  const handleGetStarted = () => {
+    localStorage.setItem("showWelcome", "false");
+    setShowWelcome(false);
+  };
+
   async function submitLinks() {
     const response = await createLinkCollection(tempLinks);
     console.log(response);
@@ -37,7 +50,7 @@ const Builder = () => {
 
   return (
     <div className="mx-auto w-[60rem]">
-      {showWelcome && <Welcome onGetStarted={() => setShowWelcome(false)} />}
+      {showWelcome && <Welcome onGetStarted={handleGetStarted} />}
       <div className={`h-full w-full ${showWelcome ? "blur-xl" : ""}`}>
         <div className="h-full w-full">
           <Header mode="edit" />
