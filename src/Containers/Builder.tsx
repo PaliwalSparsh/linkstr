@@ -37,8 +37,8 @@ const Builder = () => {
   const WelcomeOverlay = () => {
     return (
       <div>
-        <div className="absolute left-0 top-0 z-20 w-full h-[38rem] bg-white">
-          <div className="relative w-[60rem] mx-auto">
+        <div className="absolute left-0 top-0 z-20 h-[38rem] w-full bg-white">
+          <div className="relative mx-auto w-[60rem]">
             <img
               src={background}
               alt=""
@@ -46,16 +46,16 @@ const Builder = () => {
             />
             <Header mode="welcome" />
             <div className="flex flex-col">
-              <div className="h1 w-[44rem] mt-20">
+              <div className="h1 mt-20 w-[44rem]">
                 Create your perfect link collection and share it with the world.
               </div>
               <button
-                className="button h-14 w-40 text-lg rounded-2xl mt-16"
+                className="button mt-16 h-14 w-40 rounded-2xl text-lg"
                 onClick={() => setShowWelcome(false)}
               >
                 Get Started
               </button>
-              <div className="text-xs font-medium mt-6 pl-1">
+              <div className="mt-6 pl-1 text-xs font-medium">
                 <span className="text-black/40">No Login Required!</span>
                 <span> Learn more</span>
               </div>
@@ -63,7 +63,7 @@ const Builder = () => {
           </div>
         </div>
         <div
-          className="absolute left-0 top-0 z-10 bg-black/40 w-full min-h-full"
+          className="absolute left-0 top-0 z-10 min-h-full w-full bg-black/40"
           onClick={() => setShowWelcome(false)}
         ></div>
       </div>
@@ -75,19 +75,19 @@ const Builder = () => {
   const Header = ({ mode }: { mode: Mode }) => {
     const Logo = (
       <div className="flex flex-row items-center">
-        <img src={linkstrLogo} alt="logo" className="pr-1.5 h-8" />
-        <span className="font-serif leading-none pt-1">Linkstr</span>
+        <img src={linkstrLogo} alt="logo" className="h-8 pr-1.5" />
+        <span className="pt-1 font-serif leading-none">Linkstr</span>
       </div>
     );
 
     const PublishButton = <button className="button h-8 px-3">Publish</button>;
 
     const DownArrowArt = (
-      <img src={downArrowArt} alt="" className="h-56 right-1/2 -top-1" />
+      <img src={downArrowArt} alt="" className="-top-1 right-1/2 h-56" />
     );
 
     return (
-      <div className="flex items-center justify-between mt-8">
+      <div className="mt-8 flex items-center justify-between">
         {Logo}
         {mode === "preview" && DownArrowArt}
         {mode === "edit" && PublishButton}
@@ -97,14 +97,14 @@ const Builder = () => {
 
   const TitleAndDescription = () => {
     return (
-      <div className="text-center mx-auto mt-14">
+      <div className="mx-auto mt-14 text-center">
         <div className="h1">Top 10 travel destinations in India</div>
-        <div className="text-black/40 text-xs">
+        <div className="text-xs text-black/40">
           <span>curated by – </span>
           <span className="font-bold">SPARSH PALIWAL</span>
           <span className="font-bold"> • 5 Nov 2022</span>
         </div>
-        <div className="text-black/60 text-lg pt-6">
+        <div className="pt-6 text-lg text-black/60">
           Embark on a Journey Through India's Most Enchanting Destinations
         </div>
       </div>
@@ -121,16 +121,16 @@ const Builder = () => {
     description: String;
   }) => {
     return (
-      <div className="flex flex-col py-6 border-b relative">
+      <div className="relative flex flex-col border-b py-6">
         <div className="action-button -right-2.5">
           <img src={cancelIcon} alt="" />
         </div>
         <div className="flex flex-row items-center">
           <img src={linkIcon} alt="" />
-          <div className="text-xl font-serif pt-1.5 pl-2">{name}</div>
+          <div className="pl-2 pt-1.5 font-serif text-xl">{name}</div>
         </div>
-        <div className="text-sm text-black/40 pt-[-1]">{url}</div>
-        <div className="text-black/60 pt-3">{description}</div>
+        <div className="pt-[-1] text-sm text-black/40">{url}</div>
+        <div className="pt-3 text-black/60">{description}</div>
       </div>
     );
   };
@@ -179,12 +179,12 @@ const Builder = () => {
   const DragAndDrop = () => {};
 
   return (
-    <div className="w-[60rem] mx-auto">
+    <div className="mx-auto w-[60rem]">
       {showWelcome && <WelcomeOverlay />}
-      <div className={`w-full h-full ${showWelcome ? "blur-xl" : ""}`}>
-        <div className="w-full h-full">
+      <div className={`h-full w-full ${showWelcome ? "blur-xl" : ""}`}>
+        <div className="h-full w-full">
           <Header mode="edit" />
-          <div className="w-[40rem] mx-auto">
+          <div className="mx-auto w-[40rem]">
             <TitleAndDescription />
             <Collection />
             <Footer />
