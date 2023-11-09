@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-export async function createLinkCollection(links: any) {
+export async function createLinkCollection(collection: any) {
   const relays = [
     "wss://relay.damus.io/",
     "wss://offchain.pub/",
@@ -30,7 +30,8 @@ export async function createLinkCollection(links: any) {
   // link collection public key, pk is derivable from sk
   const pk = getPublicKey(sk);
 
-  let content = JSON.stringify(links);
+  let content = JSON.stringify(collection);
+  console.log(content);
 
   let baseKind0Event = {
     kind: 0,
@@ -73,5 +74,6 @@ export const getLinkCollection = async (npub: string) => {
   let kind0 = await pool.list(relays, [filter]);
   pool.close(relays);
 
+  console.log(kind0);
   return kind0;
 };

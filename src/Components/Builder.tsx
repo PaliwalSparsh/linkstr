@@ -3,9 +3,10 @@ import { createLinkCollection, getLinkCollection } from "../nostr";
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import Welcome from "./Welcome";
-import Collection from "./Collection";
+import BlockList from "./BlockList";
 import TitleAndDescription from "./TitleAndDescription";
 import AddBlock from "./AddBlock";
+import { set } from "@project-serum/anchor/dist/cjs/utils/features";
 
 // Types
 export type Mode = "welcome" | "edit" | "preview";
@@ -38,7 +39,10 @@ export type Block = Link | Headline;
 
 export type Blocks = Block[];
 
-const tempLinks = ["google.com", "youtube.com"];
+export type Collection = {
+  metadata: Metadata;
+  blocks: Blocks;
+};
 
 const welcomeMetadata: Metadata = {
   title: "My Link Collection",
@@ -67,31 +71,51 @@ const welcomeBlocks: Blocks = [
 const Builder = () => {
   const [metadata, setMetadata] = useState<Metadata>(welcomeMetadata);
   const [blocks, setBlocks] = useState<Blocks>(welcomeBlocks);
+  const [publishUrl, setPublishUrl] = useState<string>("");
 
   const { npub } = useParams();
+  console.log(npub);
 
   useEffect(() => {
     async function get() {
       if (npub) {
         let event = await getLinkCollection(npub);
-        let parsedBlocks = JSON.parse(event[0]?.content);
+        let parsedCollection = JSON.parse(event[0]?.content);
+        let parsedMetadata = parsedCollection.metadata;
+        let parsedBlocks = parsedCollection.blocks;
+        setMetadata(parsedMetadata);
         setBlocks(parsedBlocks);
       }
     }
     get();
   }, []);
 
-  async function submitLinks() {
-    const response = await createLinkCollection(tempLinks);
-    console.log(response);
+  async function handlePublish() {
+    const collection: Collection = {
+      metadata: metadata,
+      blocks: blocks,
+    };
+    const [pk, sk] = await createLinkCollection(collection);
+    setPublishUrl(`${window.location.host}/#/${pk}`);
+    setMetadata(welcomeMetadata);
+    setBlocks(welcomeBlocks);
   }
 
   return (
     <div className="mx-auto w-[60rem]">
       <Welcome />
-      <div className={`h-full w-full`}>
+      {publishUrl !== "" && (
+        <div className="text-md z-20 mx-auto mt-40 w-60 break-all font-bold text-black/60 backdrop-blur-3xl">
+          {publishUrl}
+        </div>
+      )}
+      <div
+        className={`h-full w-full ${
+          publishUrl === "" ? "blur-none" : "blur-3xl"
+        }`}
+      >
         <div className="h-full w-full">
-          <Header mode="edit" />
+          <Header mode="edit" onPublish={handlePublish} />
           <div className="mx-auto w-[40rem]">
             <TitleAndDescription
               metadata={metadata}
@@ -100,7 +124,7 @@ const Builder = () => {
                 setMetadata(updatedMetadata)
               }
             />
-            <Collection
+            <BlockList
               blocks={blocks}
               onBlocksChange={(updatedBlocks: Blocks) =>
                 setBlocks(updatedBlocks)
@@ -117,17 +141,3 @@ const Builder = () => {
 };
 
 export default Builder;
-
-/*
-    <div>
-      Hello!
-      {!npub && (
-        <button className="font-serif" onClick={submitLinks}>
-          Submit links
-        </button>
-      )}
-      {links.map((link) => (
-        <div>{link}</div>
-      ))}
-    </div>
-*/

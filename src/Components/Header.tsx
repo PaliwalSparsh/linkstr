@@ -1,8 +1,13 @@
 import linkstrLogo from "../Images/logo.svg";
 import downArrowArt from "../Images/downArrowArt.png";
 import { Mode } from "./Builder";
+interface HeaderProps {
+  mode: Mode;
+  onPublish?: () => void;
+}
 
-const Header = ({ mode }: { mode: Mode }) => {
+const Header = (props: HeaderProps) => {
+  const { mode, onPublish } = props;
   const Logo = (
     <div className="flex flex-row items-center">
       <img src={linkstrLogo} alt="logo" className="h-8 pr-1.5" />
@@ -10,7 +15,11 @@ const Header = ({ mode }: { mode: Mode }) => {
     </div>
   );
 
-  const PublishButton = <button className="button h-8 px-3">Publish</button>;
+  const PublishButton = (
+    <button className="button h-8 px-3" onClick={onPublish}>
+      Publish
+    </button>
+  );
 
   const DownArrowArt = (
     <img src={downArrowArt} alt="" className="-top-1 right-1/2 h-56" />

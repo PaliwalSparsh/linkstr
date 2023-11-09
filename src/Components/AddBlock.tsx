@@ -28,7 +28,7 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
   };
 
   return (
-    <div className="fixed bottom-8 left-[42%] rounded-2xl bg-black/10 p-1 backdrop-blur-lg">
+    <div className="fixed bottom-8 left-[42%] z-10 rounded-2xl bg-black/10 p-1 backdrop-blur-lg">
       <div className="flex w-56 flex-row items-center justify-center rounded-xl  bg-black py-2 pl-4 pr-2 text-white">
         <motion.input
           type="text"

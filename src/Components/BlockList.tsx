@@ -112,12 +112,12 @@ const BlockComponent = ({
   }
 };
 
-interface CollectionProps {
+interface BlockListProps {
   blocks: Blocks;
   onBlocksChange: (updatedBlocks: Blocks) => void;
 }
 
-const Collection = ({ blocks, onBlocksChange }: CollectionProps) => {
+const BlockList = ({ blocks, onBlocksChange }: BlockListProps) => {
   return (
     <Reorder.Group
       axis="y"
@@ -137,4 +137,4 @@ const Collection = ({ blocks, onBlocksChange }: CollectionProps) => {
   );
 };
 
-export default Collection;
+export default BlockList;
