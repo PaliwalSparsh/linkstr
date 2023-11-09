@@ -6,7 +6,6 @@ import Welcome from "./Welcome";
 import BlockList from "./BlockList";
 import TitleAndDescription from "./TitleAndDescription";
 import AddBlock from "./AddBlock";
-import { set } from "@project-serum/anchor/dist/cjs/utils/features";
 
 // Types
 export type Mode = "welcome" | "edit" | "preview";
