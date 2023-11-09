@@ -87,15 +87,15 @@ const Builder = () => {
       }
     }
     get();
-  }, []);
+  }, [npub]);
 
   async function handlePublish() {
     const collection: Collection = {
       metadata: metadata,
       blocks: blocks,
     };
-    const [pk, sk] = await createLinkCollection(collection);
-    setPublishUrl(`${window.location.host}/#/${pk}`);
+    const response = await createLinkCollection(collection);
+    setPublishUrl(`${window.location.host}/#/${response[0]}`);
     setMetadata(welcomeMetadata);
     setBlocks(welcomeBlocks);
   }
