@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
+import { Block } from "./Builder";
+import { v4 as uuidv4 } from "uuid";
 
-const AddLink = () => {
+interface AddBlockProps {
+  onAdd: (newBlock: Block) => void;
+}
+
+const AddBlock = ({ onAdd }: AddBlockProps) => {
   // this is a single bar containign a input field and then a button the input takes url checks it for validations and then button is used to add link to the list
   const [link, setLink] = useState("");
 
@@ -9,11 +15,15 @@ const AddLink = () => {
     setLink(e.target.value);
   };
 
-  function validateURL(textval: string) {
-    // Wriiten a regex to validate url
-  }
-
-  const handleAddLink = () => {
+  const handleAddBlock = () => {
+    const newLink: Block = {
+      id: uuidv4(),
+      type: "link",
+      url: link,
+      title: "Your Link",
+      description: "Description of your link goes here.",
+    };
+    onAdd(newLink);
     setLink("");
   };
 
@@ -31,7 +41,7 @@ const AddLink = () => {
           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.20)" }}
           whileTap={{ backgroundColor: "rgba(255, 255, 255, 0.15)" }}
           className="rounded-md p-2 text-sm font-medium outline-none"
-          onClick={handleAddLink}
+          onClick={handleAddBlock}
         >
           Add
         </motion.button>
@@ -40,4 +50,4 @@ const AddLink = () => {
   );
 };
 
-export default AddLink;
+export default AddBlock;

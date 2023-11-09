@@ -1,92 +1,137 @@
 import linkIcon from "../Images/link.svg";
 import cancelIcon from "../Images/cancel.svg";
 import handleIcon from "../Images/handle.svg";
-import { Reorder, useDragControls } from "framer-motion";
-import { useState } from "react";
+import { Reorder, motion, useDragControls } from "framer-motion";
+import { Blocks, Link } from "./Builder";
+import { useEditable } from "use-editable";
+import { useRef } from "react";
 
-const mockData = [
-  {
-    name: "Jaipur, Rajasthan",
-    url: "https://www.example.com/jaipur",
-    description: "Discover the Pink City's rich heritage and vibrant culture.",
-  },
-  {
-    name: "Kerala Backwaters, Kerala",
-    url: "https://www.example.com/kerala",
-    description: "Explore the serene backwaters of Kerala.",
-  },
-  {
-    name: "Hampi, Karnataka",
-    url: "https://www.example.com/hampi",
-    description: "Visit the ancient ruins of the Vijayanagara Empire.",
-  },
-  {
-    name: "Leh, Ladakh",
-    url: "https://www.example.com/leh",
-    description: "Experience the breathtaking beauty of the Himalayas.",
-  },
-  {
-    name: "Goa",
-    url: "https://www.example.com/goa",
-    description: "Relax on the sandy beaches of Goa.",
-  },
-];
-
-const Link = ({
-  data,
+const BlockComponent = ({
+  index,
+  blocks,
+  onBlocksChange,
 }: {
-  data: {
-    name: String;
-    url: String;
-    description: String;
-  };
+  index: number;
+  blocks: Blocks;
+  onBlocksChange: (updatedBlocks: Blocks) => void;
 }) => {
+  const currentBlock = blocks[index];
+
   const controls = useDragControls();
-  const { name, url, description } = data;
 
-  return (
-    <Reorder.Item
-      value={data}
-      dragListener={false}
-      dragControls={controls}
-      className="relative flex w-full flex-col border-b bg-white pb-6"
-    >
-      <div className="action-button absolute -right-2.5">
-        <img src={cancelIcon} alt="" />
-      </div>
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const urlRef = useRef(null);
 
-      <div className="flex flex-row items-center">
-        <img
-          src={handleIcon}
-          alt="handle used for reordering list elements"
-          className="action-button__no-bg cursor-grab pr-2 active:cursor-grabbing"
-          onPointerDown={(e) => {
-            controls.start(e);
-            e.preventDefault();
-          }}
-        />
+  useEditable(titleRef, (value) => {
+    const newBlocks = [...blocks];
+    newBlocks[index] = { ...currentBlock, title: value };
+    onBlocksChange(newBlocks);
+  });
 
-        <img src={linkIcon} alt="" />
-        <div className="pl-2 pt-1.5 font-serif text-xl">{name}</div>
-      </div>
-      <div className="pt-[-1] text-sm text-black/40">{url}</div>
-      <div className="pt-3 text-black/60">{description}</div>
-    </Reorder.Item>
-  );
+  useEditable(descriptionRef, (value) => {
+    const newBlocks = [...blocks];
+    newBlocks[index] = { ...currentBlock, description: value };
+    onBlocksChange(newBlocks);
+  });
+
+  useEditable(urlRef, (value) => {
+    const newBlocks = [...blocks];
+    newBlocks[index] = { ...currentBlock, url: value };
+    onBlocksChange(newBlocks);
+  });
+
+  if (currentBlock.type === "link") {
+    const { url, title, description } = currentBlock as Link;
+
+    const handleDelete = () => {
+      const newBlocks = [...blocks];
+      newBlocks.splice(index, 1);
+      onBlocksChange(newBlocks);
+    };
+
+    return (
+      <Reorder.Item
+        value={currentBlock}
+        dragListener={false}
+        dragControls={controls}
+        className="relative flex w-full flex-col border-b bg-white pb-6"
+      >
+        <div
+          className="action-button absolute -right-2.5"
+          onClick={handleDelete}
+        >
+          <img src={cancelIcon} alt="" />
+        </div>
+
+        <div className="flex flex-row items-center">
+          <img
+            src={handleIcon}
+            alt="handle used for reordering list elements"
+            className="action-button__no-bg cursor-grab pr-2 active:cursor-grabbing"
+            onPointerDown={(e) => {
+              controls.start(e);
+              e.preventDefault();
+            }}
+          />
+
+          <img src={linkIcon} alt="" />
+          <motion.div
+            whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+            whileTap={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+            ref={titleRef}
+            className="rounded-lg px-2 pt-1.5 font-serif text-xl outline-none"
+          >
+            {title}
+          </motion.div>
+        </div>
+        <div>
+          <motion.span
+            whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+            whileTap={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+            ref={urlRef}
+            className="rounded-lg py-1.5 text-sm text-black/40 outline-none"
+          >
+            {url}
+          </motion.span>
+        </div>
+        <div className="mt-3">
+          <motion.span
+            whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+            whileTap={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+            ref={descriptionRef}
+            className="rounded-lg py-1.5 text-black/60 outline-none"
+          >
+            {description}
+          </motion.span>
+        </div>
+      </Reorder.Item>
+    );
+  } else {
+    return null;
+  }
 };
 
-const Collection = () => {
-  const [links, setLinks] = useState(mockData);
+interface CollectionProps {
+  blocks: Blocks;
+  onBlocksChange: (updatedBlocks: Blocks) => void;
+}
 
+const Collection = ({ blocks, onBlocksChange }: CollectionProps) => {
   return (
     <Reorder.Group
       axis="y"
-      onReorder={setLinks}
-      values={links}
+      onReorder={onBlocksChange}
+      values={blocks}
       className="mt-14 flex flex-col gap-6"
     >
-      {links.map((link) => (
-        <Link data={link} key={link.url} />
+      {blocks.map((block, index) => (
+        <BlockComponent
+          index={index}
+          blocks={blocks}
+          onBlocksChange={onBlocksChange}
+          key={block.id}
+        />
       ))}
     </Reorder.Group>
   );

@@ -5,7 +5,7 @@ import Header from "./Header";
 import Welcome from "./Welcome";
 import Collection from "./Collection";
 import TitleAndDescription from "./TitleAndDescription";
-import AddLink from "./AddLink";
+import AddBlock from "./AddBlock";
 
 // Types
 export type Mode = "welcome" | "edit" | "preview";
@@ -19,22 +19,24 @@ export interface Metadata {
   date: string;
 }
 
-export interface Block {
+export interface BlockBase {
   id: string;
   type: BlockType;
 }
 
-export interface Link extends Block {
+export interface Link extends BlockBase {
   url: string;
   title: string;
   description: string;
 }
 
-export interface Headline extends Block {
+export interface Headline extends BlockBase {
   text: string;
 }
 
-export type Blocks = (Link | Headline)[];
+export type Block = Link | Headline;
+
+export type Blocks = Block[];
 
 const tempLinks = ["google.com", "youtube.com"];
 
@@ -93,15 +95,23 @@ const Builder = () => {
           <div className="mx-auto w-[40rem]">
             <TitleAndDescription
               metadata={metadata}
-              onMetadataChange={setMetadata}
+              // is this correct ??
+              onMetadataChange={(updatedMetadata) =>
+                setMetadata(updatedMetadata)
+              }
             />
-            <Collection />
+            <Collection
+              blocks={blocks}
+              onBlocksChange={(updatedBlocks: Blocks) =>
+                setBlocks(updatedBlocks)
+              }
+            />
             {/* Footer */}
             <div className="pb-[12rem]"></div>
           </div>
         </div>
       </div>
-      <AddLink />
+      <AddBlock onAdd={(newBlock: Block) => setBlocks([...blocks, newBlock])} />
     </div>
   );
 };
