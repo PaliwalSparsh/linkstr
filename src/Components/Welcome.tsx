@@ -1,7 +1,27 @@
 import Header from "./Header";
 import background from "../Images/background.png";
+import { useEffect, useState } from "react";
 
-const Welcome = ({ onGetStarted }: { onGetStarted: () => void }) => {
+const Welcome = () => {
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  const handleGetStarted = () => {
+    localStorage.setItem("showWelcome", "false");
+    setShowWelcome(false);
+  };
+
+  useEffect(() => {
+    // Check if the user has already seen the welcome screen
+    if (localStorage.getItem("showWelcome") === "false") {
+      setShowWelcome(false);
+    } else {
+      // this else saves us from the welcome screen flashing on each reload
+      setShowWelcome(true);
+    }
+  }, []);
+
+  if (!showWelcome) return null;
+
   return (
     <div>
       <div className="absolute left-0 top-0 z-20 h-[38rem] w-full bg-white">
@@ -18,7 +38,7 @@ const Welcome = ({ onGetStarted }: { onGetStarted: () => void }) => {
             </div>
             <button
               className="button mt-16 h-14 w-40 rounded-2xl text-lg"
-              onClick={onGetStarted}
+              onClick={handleGetStarted}
             >
               Get Started
             </button>
@@ -30,8 +50,8 @@ const Welcome = ({ onGetStarted }: { onGetStarted: () => void }) => {
         </div>
       </div>
       <div
-        className="absolute left-0 top-0 z-10 min-h-full w-full bg-black/40"
-        onClick={onGetStarted}
+        className="absolute left-0 top-0 z-10 min-h-full w-full bg-black/40 backdrop-blur-3xl"
+        onClick={handleGetStarted}
       ></div>
     </div>
   );

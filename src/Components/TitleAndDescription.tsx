@@ -1,21 +1,30 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useEditable } from "use-editable";
 import { motion } from "framer-motion";
+import { Metadata } from "./Builder";
 
-const TitleAndDescription = () => {
-  const [title, setTitle] = useState("Top 10 travel destinations in India");
-  const [description, setDescription] = useState(
-    "Embark on a Journey Through India's Most Enchanting Destinations",
-  );
-  const [author, setAuthor] = useState("Sparsh Paliwal");
+interface TitleAndDescriptionProps {
+  metadata: Metadata;
+  onTitleChange: (title: string) => void;
+  onDescriptionChange: (description: string) => void;
+  onAuthorChange: (author: string) => void;
+}
+
+const TitleAndDescription = ({
+  metadata,
+  onTitleChange,
+  onDescriptionChange,
+  onAuthorChange,
+}: TitleAndDescriptionProps) => {
+  const { title, description, author } = metadata;
 
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const authorRef = useRef(null);
 
-  useEditable(titleRef, setTitle);
-  useEditable(descriptionRef, setDescription);
-  useEditable(authorRef, setAuthor);
+  useEditable(titleRef, onTitleChange);
+  useEditable(descriptionRef, onDescriptionChange);
+  useEditable(authorRef, onAuthorChange);
 
   const formattedDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",

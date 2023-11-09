@@ -10,53 +10,108 @@ import AddLink from "./AddLink";
 // Types
 export type Mode = "welcome" | "edit" | "preview";
 
+export type BlockType = "metadata" | "link" | "headline" | "text" | "image";
+
+export interface Metadata {
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+}
+
+export interface Block {
+  id: string;
+  type: BlockType;
+}
+
+export interface Link extends Block {
+  url: string;
+  title: string;
+  description: string;
+}
+
+export interface Headline extends Block {
+  text: string;
+}
+
+export type Blocks = (Link | Headline)[];
+
 const tempLinks = ["google.com", "youtube.com"];
 
+const welcomeMetadata: Metadata = {
+  title: "My Link Collection",
+  description: "This is a link collection I made with nostr.",
+  author: "John Doe",
+  date: new Date().toISOString().split("T")[0],
+};
+
+const welcomeBlocks: Blocks = [
+  {
+    id: "2",
+    type: "link",
+    url: "https://google.com",
+    title: "Google",
+    description: "Search the web",
+  },
+  {
+    id: "3",
+    type: "link",
+    url: "https://youtube.com",
+    title: "Youtube",
+    description: "Watch videos",
+  },
+];
+
 const Builder = () => {
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [links, setLinks] = useState([]);
+  const [metadata, setMetadata] = useState<Metadata>(welcomeMetadata);
+  const [blocks, setBlocks] = useState<Blocks>(welcomeBlocks);
 
   const { npub } = useParams();
 
   useEffect(() => {
-    // Check if the user has already seen the welcome screen
-    if (localStorage.getItem("showWelcome") === "false") {
-      setShowWelcome(false);
-    } else {
-      // this else saves us from the welcome screen flashing on each reload
-      setShowWelcome(true);
-    }
-
     async function get() {
       if (npub) {
         let event = await getLinkCollection(npub);
-        let parsedLinks = JSON.parse(event[0]?.content);
-        setLinks(parsedLinks);
+        let parsedBlocks = JSON.parse(event[0]?.content);
+        setBlocks(parsedBlocks);
       }
     }
     get();
   }, []);
-
-  const handleGetStarted = () => {
-    localStorage.setItem("showWelcome", "false");
-    setShowWelcome(false);
-  };
 
   async function submitLinks() {
     const response = await createLinkCollection(tempLinks);
     console.log(response);
   }
 
-  const DragAndDrop = () => {};
-
   return (
     <div className="mx-auto w-[60rem]">
-      {showWelcome && <Welcome onGetStarted={handleGetStarted} />}
-      <div className={`h-full w-full ${showWelcome ? "blur-xl" : ""}`}>
+      <Welcome />
+      <div className={`h-full w-full`}>
         <div className="h-full w-full">
           <Header mode="edit" />
           <div className="mx-auto w-[40rem]">
-            <TitleAndDescription />
+            <TitleAndDescription
+              metadata={metadata}
+              onTitleChange={(value: string) =>
+                setMetadata({
+                  ...metadata,
+                  title: value,
+                })
+              }
+              onDescriptionChange={(value: string) =>
+                setMetadata({
+                  ...metadata,
+                  description: value,
+                })
+              }
+              onAuthorChange={(value: string) =>
+                setMetadata({
+                  ...metadata,
+                  author: value,
+                })
+              }
+            />
             <Collection />
             {/* Footer */}
             <div className="pb-[12rem]"></div>
