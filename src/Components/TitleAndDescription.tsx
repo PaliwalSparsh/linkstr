@@ -5,16 +5,12 @@ import { Metadata } from "./Builder";
 
 interface TitleAndDescriptionProps {
   metadata: Metadata;
-  onTitleChange: (title: string) => void;
-  onDescriptionChange: (description: string) => void;
-  onAuthorChange: (author: string) => void;
+  onMetadataChange: (metadata: Metadata) => void;
 }
 
 const TitleAndDescription = ({
   metadata,
-  onTitleChange,
-  onDescriptionChange,
-  onAuthorChange,
+  onMetadataChange,
 }: TitleAndDescriptionProps) => {
   const { title, description, author } = metadata;
 
@@ -22,9 +18,15 @@ const TitleAndDescription = ({
   const descriptionRef = useRef(null);
   const authorRef = useRef(null);
 
-  useEditable(titleRef, onTitleChange);
-  useEditable(descriptionRef, onDescriptionChange);
-  useEditable(authorRef, onAuthorChange);
+  useEditable(titleRef, (value) =>
+    onMetadataChange({ ...metadata, title: value }),
+  );
+  useEditable(descriptionRef, (value) =>
+    onMetadataChange({ ...metadata, description: value }),
+  );
+  useEditable(authorRef, (value) =>
+    onMetadataChange({ ...metadata, author: value }),
+  );
 
   const formattedDate = new Date().toLocaleDateString("en-US", {
     year: "numeric",

@@ -93,24 +93,7 @@ const Builder = () => {
           <div className="mx-auto w-[40rem]">
             <TitleAndDescription
               metadata={metadata}
-              onTitleChange={(value: string) =>
-                setMetadata({
-                  ...metadata,
-                  title: value,
-                })
-              }
-              onDescriptionChange={(value: string) =>
-                setMetadata({
-                  ...metadata,
-                  description: value,
-                })
-              }
-              onAuthorChange={(value: string) =>
-                setMetadata({
-                  ...metadata,
-                  author: value,
-                })
-              }
+              onMetadataChange={setMetadata}
             />
             <Collection />
             {/* Footer */}
