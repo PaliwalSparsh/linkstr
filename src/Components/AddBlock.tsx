@@ -7,6 +7,10 @@ interface AddBlockProps {
   onAdd: (newBlock: Block) => void;
 }
 
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 const AddBlock = ({ onAdd }: AddBlockProps) => {
   // this is a single bar containign a input field and then a button the input takes url checks it for validations and then button is used to add link to the list
   const [link, setLink] = useState("");
@@ -16,7 +20,10 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
   };
 
   const handleAddBlock = () => {
-    const linkDomainName = link.replace(/.+\/|www.|\..+/g, "");
+    if (link === "") return;
+    const linkDomainName = capitalizeFirstLetter(
+      link.replace(/.+\/|www.|\..+/g, ""),
+    );
     const newLink: Block = {
       id: uuidv4(),
       kind: "link",
@@ -34,6 +41,11 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
         <motion.input
           type="text"
           value={link}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleAddBlock();
+            }
+          }}
           onChange={handleLinkChange}
           className="w-full rounded-lg bg-black py-2 text-sm font-medium  outline-none"
           placeholder="Enter a link"
