@@ -3,22 +3,22 @@ import background from "../Images/background.png";
 import { useEffect, useState } from "react";
 
 const WelcomeOverlay = () => {
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [showWelcomeOverlay, setShowWelcomeOverlay] = useState(false);
 
   const handleGetStarted = () => {
-    localStorage.setItem("showWelcome", "false");
-    setShowWelcome(false);
+    localStorage.setItem("showWelcomeOverlay", "false");
+    setShowWelcomeOverlay(false);
   };
 
   useEffect(() => {
-    if (localStorage.getItem("showWelcome") === "false") {
-      setShowWelcome(false);
+    if (localStorage.getItem("showWelcomeOverlay") === "false") {
+      setShowWelcomeOverlay(false);
       return;
     }
-    setShowWelcome(true);
+    setShowWelcomeOverlay(true);
   }, []);
 
-  if (!showWelcome) return null;
+  if (showWelcomeOverlay === false) return null;
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { createLinkCollection } from "../nostr";
 import { useState } from "react";
 import Header from "../Components/Header";
 import Welcome from "./WelcomeOverlay";
-import BlockList from "../Components/BlockList";
+import AllBlocks from "../Components/AllBlocks";
 import TitleAndDescription from "../Components/TitleAndDescription";
 import AddBlock from "../Components/AddBlock";
 import { Block, Blocks, Collection, Metadata } from "../types";
@@ -31,7 +31,7 @@ export const defaultBlocks: Blocks = [
   },
 ];
 
-const Builder = () => {
+const CollectionBuilder = () => {
   const [metadata, setMetadata] = useState<Metadata>(defaultMetadata);
   const [blocks, setBlocks] = useState<Blocks>(defaultBlocks);
   const [publishUrl, setPublishUrl] = useState<string>("");
@@ -75,7 +75,7 @@ const Builder = () => {
                 setMetadata(updatedMetadata)
               }
             />
-            <BlockList
+            <AllBlocks
               mode="edit"
               blocks={blocks}
               onBlocksChange={(updatedBlocks: Blocks) =>
@@ -92,4 +92,4 @@ const Builder = () => {
   );
 };
 
-export default Builder;
+export default CollectionBuilder;

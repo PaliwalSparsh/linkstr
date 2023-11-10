@@ -145,17 +145,17 @@ const BlockComponent = ({
   }
 };
 
-interface BlockListProps {
+interface AllBlocksProps {
   mode: ViewMode;
   blocks: Blocks;
   onBlocksChange?: (updatedBlocks: Blocks) => void;
 }
 
-const BlockList = ({
+const AllBlocks = ({
   mode,
   blocks,
   onBlocksChange = () => {},
-}: BlockListProps) => {
+}: AllBlocksProps) => {
   return (
     <Reorder.Group
       axis="y"
@@ -176,4 +176,4 @@ const BlockList = ({
   );
 };
 
-export default BlockList;
+export default AllBlocks;
