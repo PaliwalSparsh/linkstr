@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import Header from "../Components/Header";
 import background from "../Images/background.png";
 import { useEffect, useState } from "react";
@@ -21,7 +22,7 @@ const WelcomeOverlay = () => {
   if (showWelcomeOverlay === false) return null;
 
   return (
-    <div>
+    <motion.div>
       <div className="absolute left-0 top-0 z-20 h-[38rem] w-full bg-white">
         <div className="relative mx-auto w-[60rem]">
           <img
@@ -51,7 +52,7 @@ const WelcomeOverlay = () => {
         className="absolute left-0 top-0 z-10 min-h-full w-full bg-black/40 backdrop-blur-3xl"
         onClick={handleGetStarted}
       ></div>
-    </div>
+    </motion.div>
   );
 };
 

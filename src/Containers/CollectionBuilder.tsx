@@ -1,7 +1,6 @@
 import { createLinkCollection } from "../nostr";
 import { useState } from "react";
 import Header from "../Components/Header";
-import Welcome from "./WelcomeOverlay";
 import AllBlocks from "../Components/AllBlocks";
 import TitleAndDescription from "../Components/TitleAndDescription";
 import AddBlock from "../Components/AddBlock";
@@ -49,7 +48,6 @@ const CollectionBuilder = () => {
 
   return (
     <div className="mx-auto w-[60rem]">
-      <Welcome />
       {publishUrl !== "" && (
         <div className="text-md z-20 mx-auto mt-40 w-60 break-all font-bold text-black/60 backdrop-blur-3xl">
           {publishUrl}

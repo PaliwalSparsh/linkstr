@@ -16,19 +16,20 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
   };
 
   const handleAddBlock = () => {
+    const linkDomainName = link.replace(/.+\/|www.|\..+/g, "");
     const newLink: Block = {
       id: uuidv4(),
       kind: "link",
       url: link,
-      title: "Your Link",
-      description: "Description of your link goes here.",
+      title: linkDomainName,
+      description: `${linkDomainName} allows you to...`,
     };
     onAdd(newLink);
     setLink("");
   };
 
   return (
-    <div className="fixed bottom-8 left-[42%] z-10 rounded-2xl bg-black/10 p-1 backdrop-blur-lg">
+    <div className="fixed bottom-8 left-1/2 z-10 -translate-x-1/2 rounded-2xl bg-black/10 p-1 backdrop-blur-lg">
       <div className="flex w-56 flex-row items-center justify-center rounded-xl  bg-black py-2 pl-4 pr-2 text-white">
         <motion.input
           type="text"
