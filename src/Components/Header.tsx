@@ -1,13 +1,17 @@
 import linkstrLogo from "../Images/logo.svg";
 import downArrowArt from "../Images/downArrowArt.png";
-import { Mode } from "./Builder";
+import { ViewMode } from "../types";
 interface HeaderProps {
-  mode: Mode;
+  mode?: ViewMode;
+  showPublishButton?: boolean;
   onPublish?: () => void;
 }
 
-const Header = (props: HeaderProps) => {
-  const { mode, onPublish } = props;
+const Header = ({
+  mode = "view",
+  onPublish = () => {},
+  showPublishButton = false,
+}: HeaderProps) => {
   const Logo = (
     <div className="flex flex-row items-center">
       <img src={linkstrLogo} alt="logo" className="h-8 pr-1.5" />
@@ -21,17 +25,18 @@ const Header = (props: HeaderProps) => {
     </button>
   );
 
-  const DownArrowArt = (
-    <img src={downArrowArt} alt="" className="-top-1 right-1/2 h-56" />
+  let body = (
+    <>
+      {Logo}
+      {showPublishButton && PublishButton}
+    </>
   );
 
-  return (
-    <div className="mt-8 flex items-center justify-between">
-      {Logo}
-      {mode === "preview" && DownArrowArt}
-      {mode === "edit" && PublishButton}
-    </div>
-  );
+  if (mode === "view") {
+    body = <img src={downArrowArt} alt="" className="-top-1 right-1/2 h-56" />;
+  }
+
+  return <div className="mt-8 flex items-center justify-between">{body}</div>;
 };
 
 export default Header;

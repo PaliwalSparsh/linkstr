@@ -1,8 +1,8 @@
-import Header from "./Header";
+import Header from "../Components/Header";
 import background from "../Images/background.png";
 import { useEffect, useState } from "react";
 
-const Welcome = () => {
+const WelcomeOverlay = () => {
   const [showWelcome, setShowWelcome] = useState(false);
 
   const handleGetStarted = () => {
@@ -11,13 +11,11 @@ const Welcome = () => {
   };
 
   useEffect(() => {
-    // Check if the user has already seen the welcome screen
     if (localStorage.getItem("showWelcome") === "false") {
       setShowWelcome(false);
-    } else {
-      // this else saves us from the welcome screen flashing on each reload
-      setShowWelcome(true);
+      return;
     }
+    setShowWelcome(true);
   }, []);
 
   if (!showWelcome) return null;
@@ -31,7 +29,7 @@ const Welcome = () => {
             alt=""
             className="absolute -right-6 -top-[82px] w-[36rem]"
           />
-          <Header mode="welcome" />
+          <Header />
           <div className="flex flex-col">
             <div className="h1 mt-20 w-[44rem]">
               Create your perfect link collection and share it with the world.
@@ -57,4 +55,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default WelcomeOverlay;

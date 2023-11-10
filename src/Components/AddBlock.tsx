@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Block } from "./Builder";
+import { Block } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
 interface AddBlockProps {
@@ -18,7 +18,7 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
   const handleAddBlock = () => {
     const newLink: Block = {
       id: uuidv4(),
-      type: "link",
+      kind: "link",
       url: link,
       title: "Your Link",
       description: "Description of your link goes here.",

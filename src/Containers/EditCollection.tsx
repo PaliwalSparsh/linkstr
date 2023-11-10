@@ -1,66 +1,30 @@
-import { useParams } from "react-router-dom";
-import { createLinkCollection, getLinkCollection } from "../nostr";
-import { useEffect, useState } from "react";
-import Header from "./Header";
-import Welcome from "./Welcome";
-import BlockList from "./BlockList";
-import TitleAndDescription from "./TitleAndDescription";
-import AddBlock from "./AddBlock";
+import { createLinkCollection } from "../nostr";
+import { useState } from "react";
+import Header from "../Components/Header";
+import Welcome from "./WelcomeOverlay";
+import BlockList from "../Components/BlockList";
+import TitleAndDescription from "../Components/TitleAndDescription";
+import AddBlock from "../Components/AddBlock";
+import { Block, Blocks, Collection, Metadata } from "../types";
 
-// Types
-export type Mode = "welcome" | "edit" | "preview";
-
-export type BlockType = "metadata" | "link" | "headline" | "text" | "image";
-
-export interface Metadata {
-  title: string;
-  description: string;
-  author: string;
-  date: string;
-}
-
-export interface BlockBase {
-  id: string;
-  type: BlockType;
-}
-
-export interface Link extends BlockBase {
-  url: string;
-  title: string;
-  description: string;
-}
-
-export interface Headline extends BlockBase {
-  text: string;
-}
-
-export type Block = Link | Headline;
-
-export type Blocks = Block[];
-
-export type Collection = {
-  metadata: Metadata;
-  blocks: Blocks;
-};
-
-const welcomeMetadata: Metadata = {
+export const defaultMetadata: Metadata = {
   title: "My Link Collection",
   description: "This is a link collection I made with nostr.",
   author: "John Doe",
   date: new Date().toISOString().split("T")[0],
 };
 
-const welcomeBlocks: Blocks = [
+export const defaultBlocks: Blocks = [
   {
     id: "2",
-    type: "link",
+    kind: "link",
     url: "https://google.com",
     title: "Google",
     description: "Search the web",
   },
   {
     id: "3",
-    type: "link",
+    kind: "link",
     url: "https://youtube.com",
     title: "Youtube",
     description: "Watch videos",
@@ -68,26 +32,9 @@ const welcomeBlocks: Blocks = [
 ];
 
 const Builder = () => {
-  const [metadata, setMetadata] = useState<Metadata>(welcomeMetadata);
-  const [blocks, setBlocks] = useState<Blocks>(welcomeBlocks);
+  const [metadata, setMetadata] = useState<Metadata>(defaultMetadata);
+  const [blocks, setBlocks] = useState<Blocks>(defaultBlocks);
   const [publishUrl, setPublishUrl] = useState<string>("");
-
-  const { npub } = useParams();
-  console.log(npub);
-
-  useEffect(() => {
-    async function get() {
-      if (npub) {
-        let event = await getLinkCollection(npub);
-        let parsedCollection = JSON.parse(event[0]?.content);
-        let parsedMetadata = parsedCollection.metadata;
-        let parsedBlocks = parsedCollection.blocks;
-        setMetadata(parsedMetadata);
-        setBlocks(parsedBlocks);
-      }
-    }
-    get();
-  }, [npub]);
 
   async function handlePublish() {
     const collection: Collection = {
@@ -96,8 +43,8 @@ const Builder = () => {
     };
     const response = await createLinkCollection(collection);
     setPublishUrl(`${window.location.host}/#/${response[0]}`);
-    setMetadata(welcomeMetadata);
-    setBlocks(welcomeBlocks);
+    setMetadata(defaultMetadata);
+    setBlocks(defaultBlocks);
   }
 
   return (
@@ -114,9 +61,14 @@ const Builder = () => {
         }`}
       >
         <div className="h-full w-full">
-          <Header mode="edit" onPublish={handlePublish} />
+          <Header
+            mode="edit"
+            showPublishButton={true}
+            onPublish={handlePublish}
+          />
           <div className="mx-auto w-[40rem]">
             <TitleAndDescription
+              mode="edit"
               metadata={metadata}
               // is this correct ??
               onMetadataChange={(updatedMetadata) =>
@@ -124,6 +76,7 @@ const Builder = () => {
               }
             />
             <BlockList
+              mode="edit"
               blocks={blocks}
               onBlocksChange={(updatedBlocks: Blocks) =>
                 setBlocks(updatedBlocks)
