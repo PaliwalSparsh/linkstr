@@ -49,8 +49,9 @@ const CollectionBuilder = () => {
   return (
     <>
       {publishUrl !== "" && (
-        <div className="text-md z-20 mx-auto mt-40 w-60 break-all font-bold text-black/60 backdrop-blur-3xl">
-          {publishUrl}
+        <div className="text-md z-30 mx-auto mt-40 w-60 break-all text-center font-bold text-black/60 backdrop-blur-3xl">
+          Success! Your link collection is live. Share it with your friends and
+          family using - <br /> <br /> {publishUrl}
         </div>
       )}
       <div
@@ -85,7 +86,11 @@ const CollectionBuilder = () => {
           </div>
         </div>
       </div>
-      <AddBlock onAdd={(newBlock: Block) => setBlocks([...blocks, newBlock])} />
+      {publishUrl === "" && (
+        <AddBlock
+          onAdd={(newBlock: Block) => setBlocks([...blocks, newBlock])}
+        />
+      )}
     </>
   );
 };

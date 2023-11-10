@@ -3,6 +3,8 @@ import { Header } from "../Components/Header";
 import background from "../Images/background.png";
 import { useEffect, useState } from "react";
 
+// Zindexs - 30 is highest, 20 is for overlays, 10 is for buttons etc.
+
 const WelcomeOverlay = () => {
   const [showWelcomeOverlay, setShowWelcomeOverlay] = useState(false);
 
@@ -23,7 +25,7 @@ const WelcomeOverlay = () => {
 
   return (
     <motion.div>
-      <div className="absolute left-0 top-0 z-20 w-full bg-white pb-12 md:pb-24">
+      <div className="absolute left-0 top-0 z-30 w-full bg-white pb-12 md:pb-24">
         <div className="relative mx-auto w-full px-4 lg:w-[60rem] lg:px-0">
           <img
             src={background}
@@ -49,7 +51,7 @@ const WelcomeOverlay = () => {
         </div>
       </div>
       <div
-        className="fixed left-0 top-0 z-10 min-h-full min-w-full bg-black/40 backdrop-blur-2xl"
+        className="fixed left-0 top-0 z-20 min-h-full min-w-full bg-black/40 backdrop-blur-2xl"
         onClick={handleGetStarted}
       ></div>
     </motion.div>
