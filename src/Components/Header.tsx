@@ -6,20 +6,20 @@ interface HeaderProps {
   onPublish?: () => void;
 }
 
+const Logo = () => (
+  <a href="https://links.formstr.app/" className="flex flex-row items-center">
+    <img src={linkstrLogo} alt="logo" className="h-8 pr-1.5" />
+    <span className="pt-1 font-serif leading-none">Linkstr</span>
+  </a>
+);
+
 const Header = ({
   onPublish = () => {},
   showPublishButton = false,
 }: HeaderProps) => {
-  const Logo = (
-    <div className="flex flex-row items-center">
-      <img src={linkstrLogo} alt="logo" className="h-8 pr-1.5" />
-      <span className="pt-1 font-serif leading-none">Linkstr</span>
-    </div>
-  );
-
   return (
     <div className="mt-8 flex items-center justify-between">
-      {Logo}
+      <Logo />
       {showPublishButton && (
         <button className="button h-8 px-3" onClick={onPublish}>
           Publish
@@ -29,4 +29,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export { Header, Logo };

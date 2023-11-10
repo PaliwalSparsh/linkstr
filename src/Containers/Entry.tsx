@@ -7,10 +7,10 @@ const Entry = () => {
   const { npub } = useParams();
 
   return (
-    <>
+    <div className="mx-auto w-full px-4 lg:w-[60rem] lg:px-0">
       <WelcomeOverlay />
       {npub ? <CollectionViewer npub={npub} /> : <CollectionBuilder />}
-    </>
+    </div>
   );
 };
 

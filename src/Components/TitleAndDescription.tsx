@@ -47,7 +47,7 @@ const TitleAndDescription = ({
             <span className="rounded-lg p-2 font-bold">{author}</span>
             <span className="font-bold"> • {formattedDate} </span>
           </div>
-          <div className="mt-4 rounded-lg p-2 text-lg text-black/60">
+          <div className="mt-4 rounded-lg p-2 text-base text-black/60 sm:text-lg">
             {description}
           </div>
         </div>
@@ -78,7 +78,7 @@ const TitleAndDescription = ({
           <motion.div
             whileHover={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
             whileTap={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
-            className="mt-4 rounded-lg p-2 text-lg text-black/60 outline-none"
+            className="mt-4 rounded-lg p-2 text-base text-black/60 outline-none sm:text-lg"
             ref={descriptionRef}
           >
             {description}

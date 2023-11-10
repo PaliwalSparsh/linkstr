@@ -19,6 +19,6 @@
     }
 
     .h1{
-        @apply font-serif text-6xl leading-none;
+        @apply font-serif text-4xl sm:text-6xl leading-none;
     }
 }
