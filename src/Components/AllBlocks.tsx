@@ -43,12 +43,19 @@ const BlockComponent = ({
     onBlocksChange(newBlocks);
   });
 
+  function addHttpsToUrl(url: string) {
+    if (/(http(s?)):\/\//i.test(url)) {
+      return url;
+    }
+    return "https://" + url;
+  }
+
   switch (mode) {
     case "view":
       if (currentBlock.kind === "link") {
         const { url, title, description } = currentBlock as Link;
         return (
-          <a href={url} className="no-underline">
+          <a href={addHttpsToUrl(url)} className="no-underline">
             <div className="relative flex w-full flex-col border-b bg-white pb-4 sm:pb-6">
               <div className="flex flex-row items-center">
                 <img src={linkIcon} alt="" />
