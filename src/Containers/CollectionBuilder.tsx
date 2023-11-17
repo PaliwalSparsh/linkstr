@@ -5,6 +5,8 @@ import AllBlocks from "../Components/AllBlocks";
 import TitleAndDescription from "../Components/TitleAndDescription";
 import AddBlock from "../Components/AddBlock";
 import { Block, Blocks, Collection, Metadata } from "../types";
+import WelcomeOverlay from "./WelcomeOverlay";
+import SuccessOverlay from "./SuccessOverlay";
 
 export const defaultMetadata: Metadata = {
   title: "My Link Collection",
@@ -46,19 +48,13 @@ const CollectionBuilder = () => {
     setBlocks(defaultBlocks);
   }
 
+  const isCollectionPublished = publishUrl !== "";
+
   return (
     <>
-      {publishUrl !== "" && (
-        <div className="text-md z-30 mx-auto mt-40 w-60 break-all text-center font-bold text-black/60 backdrop-blur-3xl">
-          Success! Your link collection is live. Share it with your friends and
-          family using - <br /> <br /> {publishUrl}
-        </div>
-      )}
-      <div
-        className={`h-full w-full ${
-          publishUrl === "" ? "blur-none" : "blur-3xl"
-        }`}
-      >
+      <WelcomeOverlay />
+      {isCollectionPublished && <SuccessOverlay publishUrl={publishUrl} />}
+      <div className="h-full w-full">
         <div className="h-full w-full">
           <Header
             mode="edit"
@@ -86,11 +82,7 @@ const CollectionBuilder = () => {
           </div>
         </div>
       </div>
-      {publishUrl === "" && (
-        <AddBlock
-          onAdd={(newBlock: Block) => setBlocks([...blocks, newBlock])}
-        />
-      )}
+      <AddBlock onAdd={(newBlock: Block) => setBlocks([...blocks, newBlock])} />
     </>
   );
 };
