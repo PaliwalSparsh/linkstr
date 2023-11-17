@@ -2,22 +2,22 @@ import linkIcon from "../Images/link.svg";
 import cancelIcon from "../Images/cancel.svg";
 import handleIcon from "../Images/handle.svg";
 import { Reorder, motion, useDragControls } from "framer-motion";
-import { Blocks, Link, ViewMode } from "../types";
+import { Nodes, Link, ViewMode } from "../types";
 import { useEditable } from "use-editable";
 import { useRef } from "react";
 
-const BlockComponent = ({
+const NodeComponent = ({
   mode,
   index,
-  blocks,
-  onBlocksChange,
+  nodes,
+  onNodesChange,
 }: {
   mode: ViewMode;
   index: number;
-  blocks: Blocks;
-  onBlocksChange: (updatedBlocks: Blocks) => void;
+  nodes: Nodes;
+  onNodesChange: (updatedNodes: Nodes) => void;
 }) => {
-  const currentBlock = blocks[index];
+  const currentNode = nodes[index];
 
   const controls = useDragControls();
 
@@ -26,21 +26,21 @@ const BlockComponent = ({
   const urlRef = useRef(null);
 
   useEditable(titleRef, (value) => {
-    const newBlocks = [...blocks];
-    newBlocks[index] = { ...currentBlock, title: value };
-    onBlocksChange(newBlocks);
+    const newNodes = [...nodes];
+    newNodes[index] = { ...currentNode, title: value };
+    onNodesChange(newNodes);
   });
 
   useEditable(descriptionRef, (value) => {
-    const newBlocks = [...blocks];
-    newBlocks[index] = { ...currentBlock, description: value };
-    onBlocksChange(newBlocks);
+    const newNodes = [...nodes];
+    newNodes[index] = { ...currentNode, description: value };
+    onNodesChange(newNodes);
   });
 
   useEditable(urlRef, (value) => {
-    const newBlocks = [...blocks];
-    newBlocks[index] = { ...currentBlock, url: value };
-    onBlocksChange(newBlocks);
+    const newNodes = [...nodes];
+    newNodes[index] = { ...currentNode, url: value };
+    onNodesChange(newNodes);
   });
 
   function addHttpsToUrl(url: string) {
@@ -52,8 +52,8 @@ const BlockComponent = ({
 
   switch (mode) {
     case "view":
-      if (currentBlock.kind === "link") {
-        const { url, title, description } = currentBlock as Link;
+      if (currentNode.kind === "link") {
+        const { url, title, description } = currentNode as Link;
         return (
           <a href={addHttpsToUrl(url)} className="no-underline">
             <div className="relative flex w-full flex-col border-b bg-white pb-4 sm:pb-6">
@@ -78,18 +78,18 @@ const BlockComponent = ({
         return null;
       }
     case "edit":
-      if (currentBlock.kind === "link") {
-        const { url, title, description } = currentBlock as Link;
+      if (currentNode.kind === "link") {
+        const { url, title, description } = currentNode as Link;
 
         const handleDelete = () => {
-          const newBlocks = [...blocks];
-          newBlocks.splice(index, 1);
-          onBlocksChange(newBlocks);
+          const newNodes = [...nodes];
+          newNodes.splice(index, 1);
+          onNodesChange(newNodes);
         };
 
         return (
           <Reorder.Item
-            value={currentBlock}
+            value={currentNode}
             dragListener={false}
             dragControls={controls}
             className="relative flex w-full flex-col border-b bg-white pb-4 sm:pb-6"
@@ -151,35 +151,31 @@ const BlockComponent = ({
   }
 };
 
-interface AllBlocksProps {
+interface AllNodesProps {
   mode: ViewMode;
-  blocks: Blocks;
-  onBlocksChange?: (updatedBlocks: Blocks) => void;
+  nodes: Nodes;
+  onNodesChange?: (updatedNodes: Nodes) => void;
 }
 
-const AllBlocks = ({
-  mode,
-  blocks,
-  onBlocksChange = () => {},
-}: AllBlocksProps) => {
+const AllNodes = ({ mode, nodes, onNodesChange = () => {} }: AllNodesProps) => {
   return (
     <Reorder.Group
       axis="y"
-      onReorder={onBlocksChange}
-      values={blocks}
+      onReorder={onNodesChange}
+      values={nodes}
       className="mt-14 flex flex-col gap-4 sm:gap-6"
     >
-      {blocks.map((block, index) => (
-        <BlockComponent
+      {nodes.map((node, index) => (
+        <NodeComponent
           mode={mode}
           index={index}
-          blocks={blocks}
-          onBlocksChange={onBlocksChange}
-          key={block.id}
+          nodes={nodes}
+          onNodesChange={onNodesChange}
+          key={node.id}
         />
       ))}
     </Reorder.Group>
   );
 };
 
-export default AllBlocks;
+export default AllNodes;

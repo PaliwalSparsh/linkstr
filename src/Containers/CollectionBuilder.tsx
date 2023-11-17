@@ -1,10 +1,10 @@
 import { createLinkCollection } from "../nostr";
 import { useState } from "react";
 import { Header } from "../Components/Header";
-import AllBlocks from "../Components/AllBlocks";
+import AllNodes from "../Components/AllNodes";
 import TitleAndDescription from "../Components/TitleAndDescription";
-import AddBlock from "../Components/AddBlock";
-import { Block, Blocks, Collection, Metadata } from "../types";
+import AddNode from "../Components/AddNode";
+import { Node, Nodes, Collection, Metadata } from "../types";
 import WelcomeOverlay from "./WelcomeOverlay";
 import SuccessOverlay from "./SuccessOverlay";
 
@@ -15,7 +15,7 @@ export const defaultMetadata: Metadata = {
   date: new Date().toISOString().split("T")[0],
 };
 
-export const defaultBlocks: Blocks = [
+export const defaultNodes: Nodes = [
   {
     id: "2",
     kind: "link",
@@ -34,18 +34,18 @@ export const defaultBlocks: Blocks = [
 
 const CollectionBuilder = () => {
   const [metadata, setMetadata] = useState<Metadata>(defaultMetadata);
-  const [blocks, setBlocks] = useState<Blocks>(defaultBlocks);
+  const [nodes, setNodes] = useState<Nodes>(defaultNodes);
   const [publishUrl, setPublishUrl] = useState<string>("");
 
   async function handlePublish() {
     const collection: Collection = {
       metadata: metadata,
-      blocks: blocks,
+      nodes: nodes,
     };
     const response = await createLinkCollection(collection);
     setPublishUrl(`${window.location.host}/#/${response[0]}`);
     setMetadata(defaultMetadata);
-    setBlocks(defaultBlocks);
+    setNodes(defaultNodes);
   }
 
   const isCollectionPublished = publishUrl !== "";
@@ -70,19 +70,16 @@ const CollectionBuilder = () => {
                 setMetadata(updatedMetadata)
               }
             />
-            <AllBlocks
+            <AllNodes
               mode="edit"
-              blocks={blocks}
-              onBlocksChange={(updatedBlocks: Blocks) =>
-                setBlocks(updatedBlocks)
-              }
+              nodes={nodes}
+              onNodesChange={(updatedNodes: Nodes) => setNodes(updatedNodes)}
             />
-            {/* Footer */}
-            <div className="pb-[12rem]"></div>
+            <div className="pb-[12rem]" />
           </div>
         </div>
       </div>
-      <AddBlock onAdd={(newBlock: Block) => setBlocks([...blocks, newBlock])} />
+      <AddNode onAdd={(newNode: Node) => setNodes([...nodes, newNode])} />
     </>
   );
 };

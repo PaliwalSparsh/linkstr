@@ -7,26 +7,26 @@ export interface Metadata {
   date: string;
 }
 
-export interface BlockBase {
+export interface NodeBase {
   id: string;
   kind: "metadata" | "link" | "headline" | "text" | "image";
 }
 
-export interface Link extends BlockBase {
+export interface Link extends NodeBase {
   url: string;
   title: string;
   description: string;
 }
 
-export interface Headline extends BlockBase {
+export interface Headline extends NodeBase {
   text: string;
 }
 
-export type Block = Link | Headline;
+export type Node = Link | Headline;
 
-export type Blocks = Block[];
+export type Nodes = Node[];
 
 export type Collection = {
   metadata: Metadata;
-  blocks: Blocks;
+  nodes: Nodes;
 };

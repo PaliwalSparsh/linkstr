@@ -1,17 +1,17 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Block } from "../types";
+import { Node } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-interface AddBlockProps {
-  onAdd: (newBlock: Block) => void;
+interface AddNodeProps {
+  onAdd: (newNode: Node) => void;
 }
 
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const AddBlock = ({ onAdd }: AddBlockProps) => {
+const AddNode = ({ onAdd }: AddNodeProps) => {
   // this is a single bar containign a input field and then a button the input takes url checks it for validations and then button is used to add link to the list
   const [link, setLink] = useState("");
 
@@ -19,12 +19,12 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
     setLink(e.target.value);
   };
 
-  const handleAddBlock = () => {
+  const handleAddNode = () => {
     if (link === "") return;
     const linkDomainName = capitalizeFirstLetter(
       link.replace(/.+\/|www.|\..+/g, ""),
     );
-    const newLink: Block = {
+    const newLink: Node = {
       id: uuidv4(),
       kind: "link",
       url: link,
@@ -43,7 +43,7 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
           value={link}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              handleAddBlock();
+              handleAddNode();
             }
           }}
           onChange={handleLinkChange}
@@ -54,7 +54,7 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.20)" }}
           whileTap={{ backgroundColor: "rgba(255, 255, 255, 0.15)" }}
           className="rounded-md p-2 text-sm font-medium outline-none"
-          onClick={handleAddBlock}
+          onClick={handleAddNode}
         >
           Add
         </motion.button>
@@ -63,4 +63,4 @@ const AddBlock = ({ onAdd }: AddBlockProps) => {
   );
 };
 
-export default AddBlock;
+export default AddNode;

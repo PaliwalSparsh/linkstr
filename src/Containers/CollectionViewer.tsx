@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import downArrowArt from "../Images/downArrowArt.png";
 import TitleAndDescription from "../Components/TitleAndDescription";
 import { Collection } from "../types";
-import { defaultBlocks, defaultMetadata } from "./CollectionBuilder";
-import AllBlocks from "../Components/AllBlocks";
+import { defaultNodes, defaultMetadata } from "./CollectionBuilder";
+import AllNodes from "../Components/AllNodes";
 import { getLinkCollection } from "../nostr";
 import { Logo } from "../Components/Header";
 
@@ -37,7 +37,7 @@ const CollectionViewer = ({ npub }: CollectionViewerProps) => {
           mode="view"
           metadata={collection?.metadata ?? defaultMetadata}
         />
-        <AllBlocks mode="view" blocks={collection?.blocks ?? defaultBlocks} />
+        <AllNodes mode="view" nodes={collection?.nodes ?? defaultNodes} />
         <div className="flex flex-row items-center justify-center pb-12 pt-32">
           <Logo />
         </div>
