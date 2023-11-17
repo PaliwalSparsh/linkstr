@@ -14,7 +14,7 @@ function copyToClipboard(text: string) {
 const SuccessOverlay = ({ publishUrl }: { publishUrl: string }) => {
   return (
     <div className="fixed left-0 top-0 z-20 min-h-full min-w-full bg-white/60 backdrop-blur-xl">
-      <div className="flex flex-col items-center gap-2">
+      <div className="mt-[30vh] flex flex-col items-center gap-2">
         <img src={successArt} alt="" className="h-12" />
         <div className="text-lg font-bold">Your link collection is live!</div>
         <div className="text-xs font-medium">
