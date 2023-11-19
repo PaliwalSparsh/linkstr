@@ -1,4 +1,4 @@
-import { createLinkCollection } from "../nostr";
+import { createForm } from "@formstr/sdk";
 import { useState } from "react";
 import { Header } from "../Components/Header";
 import AllNodes from "../Components/AllNodes";
@@ -42,7 +42,7 @@ const CollectionBuilder = () => {
       metadata: metadata,
       nodes: nodes,
     };
-    const response = await createLinkCollection(collection);
+    const response = await createForm({name: metadata.title, schemaVersion: "v1", metadata: collection, description: metadata.description})
     setPublishUrl(`${window.location.host}/#/${response[0]}`);
     setMetadata(defaultMetadata);
     setNodes(defaultNodes);

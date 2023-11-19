@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { getFormTemplate } from "@formstr/sdk";
 import downArrowArt from "../Images/downArrowArt.png";
 import TitleAndDescription from "../Components/TitleAndDescription";
 import { Collection } from "../types";
 import { defaultNodes, defaultMetadata } from "./CollectionBuilder";
 import AllNodes from "../Components/AllNodes";
-import { getLinkCollection } from "../nostr";
 import { Logo } from "../Components/Header";
 import Loader from "./Loader";
 
@@ -18,9 +18,8 @@ const CollectionViewer = ({ npub }: CollectionViewerProps) => {
 
   useEffect(() => {
     async function get() {
-      let event = await getLinkCollection(npub);
-      let parsedCollection = JSON.parse(event[0]?.content);
-      setCollection(parsedCollection);
+      let template = await getFormTemplate(npub);
+      setCollection(template.metadata);
       setIsLoading(false);
     }
     get();

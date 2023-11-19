@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@formstr/sdk": "^0.0.2-gamma",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -20,6 +21,7 @@
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",
     "typescript": "^5.2.2",
+    "url": "^0.11.3",
     "use-editable": "^2.3.3",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
@@ -36,18 +38,11 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "devDependencies": {
     "@types/uuid": "^9.0.7",
     "prettier": "^3.0.3",
