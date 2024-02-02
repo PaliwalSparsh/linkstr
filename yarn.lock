@@ -1386,10 +1386,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.53.0.tgz#bea56f2ed2b5baea164348ff4d5a879f6f81f20d"
   integrity sha512-Kn7K8dx/5U6+cT1yEhpX1w4PCSg0M+XyRILPgvwcEBjerFWCwQj5sbr3/VmxqV0JGHCBCzyd6LxypEuehypY1w==
 
-"@formstr/sdk@^0.0.2-gamma":
-  version "0.0.2-gamma"
-  resolved "https://registry.yarnpkg.com/@formstr/sdk/-/sdk-0.0.2-gamma.tgz#2c85444e2458765868042ddf85350cc4db8a7cd7"
-  integrity sha512-MhpBgJ9F7X1Yv3OCIjJTq6Ap+1qKzGW58MWXjqdkivvnByIxBa7gB+iYSs/eOj+q3cSm0jmGbeCOKGebo1NWag==
+"@formstr/sdk@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@formstr/sdk/-/sdk-0.0.4.tgz#58f80d522c49cf5f9ec8908f613fa7edcd0d65b5"
+  integrity sha512-h0tfgjbgNAR+zozSDXQ0OA9g2g96qCjZXJctJ8MDQ1AkDHQhV5CZCnWzGnPCLdJwM/hxtJ9F8Bxh5oNXQnOuQQ==
   dependencies:
     "@types/jest" "^29.5.8"
     "@types/node" "^16.7.13"

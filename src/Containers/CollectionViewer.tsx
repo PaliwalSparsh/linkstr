@@ -19,7 +19,7 @@ const CollectionViewer = ({ npub }: CollectionViewerProps) => {
   useEffect(() => {
     async function get() {
       let template = await getFormTemplate(npub);
-      setCollection(template.metadata);
+      setCollection(template.metadata as any);
       setIsLoading(false);
     }
     get();
