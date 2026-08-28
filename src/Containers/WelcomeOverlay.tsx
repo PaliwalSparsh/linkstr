@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Header } from "../Components/Header";
+import Button from "../Components/Button";
 import background from "../Images/background.png";
 import { useEffect, useState } from "react";
 
@@ -37,12 +38,12 @@ const WelcomeOverlay = () => {
             <div className="h1 mt-20 w-full md:w-[44rem]">
               Create your perfect link collection and share it with the world.
             </div>
-            <button
+            <Button
               className="button mt-16 h-14 w-40 rounded-2xl text-lg"
               onClick={handleGetStarted}
             >
               Get Started
-            </button>
+            </Button>
             <div className="mt-6 pl-1 text-xs font-medium">
               <span className="text-black/40">No Login Required!</span>
               <span> Learn more</span>

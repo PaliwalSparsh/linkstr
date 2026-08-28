@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Node } from "../types";
 import { v4 as uuidv4 } from "uuid";
+import { pressScale, pressTransition } from "../lib/motion";
 
 interface AddNodeProps {
   onAdd: (newNode: Node) => void;
@@ -52,7 +53,11 @@ const AddNode = ({ onAdd }: AddNodeProps) => {
         />
         <motion.button
           whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.20)" }}
-          whileTap={{ backgroundColor: "rgba(255, 255, 255, 0.15)" }}
+          whileTap={{
+            backgroundColor: "rgba(255, 255, 255, 0.15)",
+            ...pressScale,
+          }}
+          transition={pressTransition}
           className="rounded-md p-2 text-sm font-medium outline-none"
           onClick={handleAddNode}
         >

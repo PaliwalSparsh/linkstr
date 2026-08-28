@@ -43,7 +43,7 @@ const CollectionBuilder = () => {
       nodes: nodes,
     };
     const response = await createForm({name: metadata.title, schemaVersion: "v1", metadata: collection, description: metadata.description})
-    setPublishUrl(`${window.location.host}/#/${response[0]}`);
+    setPublishUrl(`${window.location.origin}/#/${response[0]}`);
     setMetadata(defaultMetadata);
     setNodes(defaultNodes);
   }
@@ -53,7 +53,12 @@ const CollectionBuilder = () => {
   return (
     <>
       <WelcomeOverlay />
-      {isCollectionPublished && <SuccessOverlay publishUrl={publishUrl} />}
+      {isCollectionPublished && (
+        <SuccessOverlay
+          publishUrl={publishUrl}
+          onCreateNew={() => setPublishUrl("")}
+        />
+      )}
       <div className="h-full w-full">
         <div className="h-full w-full">
           <Header

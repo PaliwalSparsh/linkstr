@@ -1,0 +1,13 @@
+diff --git a/node_modules/@formstr/sdk/dist/formstr/formstr.js b/node_modules/@formstr/sdk/dist/formstr/formstr.js
+index 5baafe6..272cbfe 100644
+--- a/node_modules/@formstr/sdk/dist/formstr/formstr.js
++++ b/node_modules/@formstr/sdk/dist/formstr/formstr.js
+@@ -247,7 +247,7 @@ export const createForm = (form, saveOnNostr = false, userSecretKey = null, tags
+         sig: "",
+     };
+     const kind0Event = Object.assign(Object.assign({}, baseKind0Event), { id: getEventHash(baseKind0Event), sig: getSignature(baseKind0Event, formSecret) });
+-    //pool.publish(relayList, kind0Event);
++    pool.publish(relayList, kind0Event).forEach((p) => p.catch(() => { }));
+     let useId = formId;
+     if (encodeProfile) {
+         useId = nip19.nprofileEncode({

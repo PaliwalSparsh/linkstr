@@ -1,5 +1,6 @@
 import linkstrLogo from "../Images/logo.svg";
 import { ViewMode } from "../types";
+import Button from "./Button";
 interface HeaderProps {
   mode?: ViewMode;
   showPublishButton?: boolean;
@@ -21,9 +22,9 @@ const Header = ({
     <div className="mt-8 flex items-center justify-between">
       <Logo />
       {showPublishButton && (
-        <button className="button h-8 px-3" onClick={onPublish}>
+        <Button className="button h-8 px-3" onClick={onPublish}>
           Publish
-        </button>
+        </Button>
       )}
     </div>
   );

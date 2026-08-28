@@ -5,6 +5,7 @@ import { Reorder, motion, useDragControls } from "framer-motion";
 import { Nodes, Link, ViewMode } from "../types";
 import { useEditable } from "use-editable";
 import { useRef } from "react";
+import { pressScale, pressTransition } from "../lib/motion";
 
 const NodeComponent = ({
   mode,
@@ -94,12 +95,15 @@ const NodeComponent = ({
             dragControls={controls}
             className="relative flex w-full flex-col border-b bg-white pb-4 sm:pb-6"
           >
-            <div
+            <motion.button
+              type="button"
+              whileTap={pressScale}
+              transition={pressTransition}
               className="action-button absolute -right-2.5"
               onClick={handleDelete}
             >
               <img src={cancelIcon} alt="" />
-            </div>
+            </motion.button>
 
             <div className="flex flex-row items-center">
               <img
